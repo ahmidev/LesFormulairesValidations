@@ -1,0 +1,59 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <label>
+      Nom d'utilisateur:
+      <input type="text" formControlName="username">
+    </label>
+  <div formGroupName="credentials">
+
+      <label>
+          Email:
+          <input type="email" formControlName="email">
+        </label>
+        <div *ngIf="userForm.get('credentials.email')?.invalid && (userForm.get('credentials.email')?.dirty || userForm.get('credentials.email')?.touched)" class="alert alert-danger">
+            <div *ngIf="userForm.get('credentials.email')?.errors?.['required']">
+             l'email est requis.
+            </div>
+            <div *ngIf="userForm.get('credentials.email')?.errors?.['email']">
+              {{ userForm.get('credentials.email')?.errors?.['email'].rules }}
+            </div>
+          </div>
+          
+        
+          
+        <label>
+            Mot de passe:
+            <input type="password" formControlName="password">
+        </label>
+    </div>
+  
+    <div formGroupName="address">
+      <label>
+        Rue:
+        <input type="text" formControlName="street">
+      </label>
+  
+      <label>
+        Code Postal:
+        <input type="text" formControlName="postalCode">
+      </label>
+  
+      <label>
+        Ville:
+        <input type="text" formControlName="city">
+      </label>
+    </div>
+  
+    <button type="submit"  [disabled]="!userForm.valid">Inscription</button>
+  </form>
+  
+  <h2>Utilisateurs:</h2>
+  
+  <div *ngIf="user">
+    <p>Nom d'utilisateur: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Password: {{ user.password }}</p>
+    <p>Rue: {{ user.address.street }}</p>
+    <p>Code Postal: {{ user.address.postalCode }}</p>
+    <p>Ville: {{ user.address.city }}</p>
+  </div>
+  
